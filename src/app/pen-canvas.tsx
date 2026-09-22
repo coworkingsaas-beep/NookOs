@@ -155,7 +155,7 @@ export default function PenCanvas({ scene, reusable }: {
   const pathname = usePathname();
   const components = new Map(reusable.flatMap((node) => node.id ? [[node.id, node] as const] : []));
   const isDashboard = scene.name === "NookOS / Operations Dashboard" || scene.name === "NookOS / Member Dashboard";
-  const showThemeToggle = scene.name?.startsWith("NookOS /") || scene.name?.startsWith("NookOS Member /") || scene.name?.startsWith("NookOS Settings /");
+  const showThemeToggle = scene.name?.startsWith("NookOS / Operations") || scene.name?.startsWith("NookOS / Members") || scene.name?.startsWith("NookOS / Leads") || scene.name?.startsWith("NookOS / Desk") || scene.name?.startsWith("NookOS / Meeting") || scene.name?.startsWith("NookOS / Bookings") || scene.name?.startsWith("NookOS / Community") || scene.name?.startsWith("NookOS / Payments") || scene.name?.startsWith("NookOS / Expenses") || scene.name?.startsWith("NookOS / Maintenance") || scene.name?.startsWith("NookOS / Reports") || scene.name?.startsWith("NookOS / Notifications") || scene.name?.startsWith("NookOS / Settings") || scene.name?.startsWith("NookOS Member /");
   const visibleScene = isDashboard ? scene : withoutPageHeading(scene);
   const toggleTheme = () => saveTheme(!dark);
   const isMember = scene.name?.startsWith("NookOS Member /") || scene.name === "NookOS / Member Dashboard";
@@ -167,7 +167,7 @@ export default function PenCanvas({ scene, reusable }: {
   };
   return (
     <main className="pen-stage" aria-label={scene.name}>
-      <div className={`pen-page pen-app-page${dark ? " is-dark" : ""}`}>
+      <div className={`pen-page${showThemeToggle ? " pen-app-page" : " pen-standalone"}${dark ? " is-dark" : ""}`}>
         {showThemeToggle && <MobileAppChrome sceneName={scene.name ?? ""} member={isMember} dark={dark} onToggleTheme={toggleTheme} />}
         {visibleScene && <PenElement node={visibleScene} routeFor={routeFor} components={components} parentLayout="row" root dark={dark} onToggleTheme={toggleTheme} showThemeToggle={showThemeToggle} />}
         {showThemeToggle && <MobileQuickAction member={isMember} />}
